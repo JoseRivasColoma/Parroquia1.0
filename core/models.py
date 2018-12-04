@@ -40,8 +40,8 @@ class Evento(models.Model):
     hora_evento = models.TimeField(auto_now=False, auto_now_add=False)
     descripcion = models.CharField(max_length=50)
     direccion = models.CharField(max_length=50)
-    tipo_evento = models.ForeignKey(TipoEvento, on_delete = models.CASCADE)
-    estado_evento = models.ForeignKey(EstadoEvento, on_delete= models.CASCADE)
+    tipo_evento = models.ForeignKey(TipoEvento, on_delete=models.CASCADE)
+    estado_evento = models.ForeignKey(EstadoEvento, on_delete=models.CASCADE)
     def __str__(self):
         return self.descripcion
     class Meta:
@@ -55,9 +55,9 @@ class Persona(models.Model):
     sexo = models.CharField(max_length=20)
     telefono = models.CharField(max_length=15)
     direccion = models.CharField(max_length=50)
-    tipo_persona = models.ForeignKey(TipoPersona, on_delete=models.CASCADE)
-    tipo_evento = models.ForeignKey(TipoEvento, on_delete=models.CASCADE, null = True)
-    comunidad = models.ForeignKey(Comunidad, on_delete = models.CASCADE, null=True)
+    tipo_persona = models.ForeignKey(TipoPersona, on_delete=models.CASCADE, related_name='cargo')
+    tipo_evento = models.ForeignKey(TipoEvento, on_delete=models.CASCADE, null=True)
+    comunidad = models.ForeignKey(Comunidad, on_delete=models.CASCADE, null=True)
     def __str__(self):
         return self.nombre + ' ' +self.apellido
     class Meta:

@@ -4,7 +4,7 @@ from . import views
 
 urlpatterns = [
     path('', views.Home, name='home'),
-    path('bacan/', views.VariableBase, name='base'),
+    path('listado_filtro/<int:tipo_persona>/', views.ListadoPersonasFiltroTipoPersona, name='listado_filtro_cargo'),
     path('ingreso_personas/', views.IngresoPersonas, name='ingreso_personas'),
     path('listado_personas/', views.ListadoPersonas, name='listado_personas'),
     path('eliminar_persona/<id>/', views.Eliminar_Personas, name='eliminar_persona'),

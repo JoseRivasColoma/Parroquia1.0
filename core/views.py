@@ -1,31 +1,33 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, render_to_response, get_list_or_404, get_object_or_404
+from django.http import HttpResponse, Http404, HttpResponseRedirect
 from .models import Comunidad, TipoPersona, TipoEvento, Persona
 from django.contrib import messages
 
 # Create your views here.
+tipos_persona = TipoPersona.objects.all()
+
 def Home(request):
     return render(request, 'core/home.html')
 
 
 def ListadoPersonas(request):
     personas = Persona.objects.all()
-    return render(request, 'core/listado_personas.html',{'personas':personas})
+    return render(request, 'core/listado_personas.html' , {'personas':personas})
 
 def VariableBase(request):
     tipos_persona = TipoPersona.objects.all()
     variables = {
         'tp':tipos_persona
     }
+    return render_to_response('base.html', variables)
 
-    return render(request, 'core/base.html', variables)
 
-def ListadoPersonasFiltroTipoPersona(request, id):
-    tipos_persona = TipoPersona.objects.all()
-    variables = {
-        'tp':tipos_persona
-    }
+def ListadoPersonasFiltroTipoPersona(request, tipo_persona):
+    personas = Persona.objects.filter(tipo_persona__pk=tipo_persona)
+    return render(request, 'core/listado_personas_filtro_tipo_persona.html' , {'personas':personas})
+    
 
-    return render(request, 'core/base.html', variables)
+   
 
 def Eliminar_Personas(request, id):
     #buscar la persona
@@ -81,7 +83,7 @@ def IngresoPersonas(request):
     return render (request, 'core/ingreso_personas.html',variables)
     
 def ModificacionPersonas(request, id):
-    persona =Persona.objects.get(id=id)
+    persona = Persona.objects.get(id=id)
     tipos_persona = TipoPersona.objects.all()
     tipos_evento = TipoEvento.objects.all()
     comunidades = Comunidad.objects.all()
